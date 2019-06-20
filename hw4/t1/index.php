@@ -1,7 +1,6 @@
 <?php
     const PICS_DIR = './pics';
     $pics = scandir(PICS_DIR);
-    print_r($pics);
 ?>
 
 <!doctype html>
@@ -18,20 +17,23 @@
   </head>
   <body>
     <h1>Галерея</h1>
+    <form enctype="multipart/form-data" action="upload.php" method="POST">
+        <input type="hidden" name="MAX_FILE_SIZE" value="41943040" />
+        Choose picture <input name="file" type="file" accept="image/png, image/jpeg">
+        <input type="submit" name="upload" value="Upload"/><br/>
+    </form>
+    </br></br></br>
     <div class="gallery">
         <?php foreach ($pics as $key => $value): ?>
             <?php
                 $path = PICS_DIR.DIRECTORY_SEPARATOR.$value;
                 if (is_dir($path)) continue;
-
-                $file = fopen($path, 'r') or die();
-                $buffer = fread($file, filesize($path));
             ?>
             <div class="pic">
-                 <a href="#"><?=$city?>$pic</a>
-                 <img src="data:image/png;base64,'.base64_encode(file_get_contents($filename)).'" />
+                 <a href="<?=$path?>" target="new">
+                    <img src="<?=$path?>" width="100" height="100"/>
+                 </a>
             </div>
-            <?php fclose($file); ?>
         <?php endforeach;?>
     </div>
 
@@ -43,9 +45,8 @@
   </body>
 
   <style>
-    .city {
-        margin-left: 35px;
-        background-color: lightgray;
+    .gallery {
+        display: inline-flex;
     }
   </style>
 </html>
