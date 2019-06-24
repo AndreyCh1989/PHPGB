@@ -12,11 +12,6 @@
   </head>
   <body>
     <h1>Галерея</h1>
-    <form enctype="multipart/form-data" action="upload.php" method="POST">
-        <input type="hidden" name="MAX_FILE_SIZE" value="41943040" />
-        Choose picture <input name="file" type="file" accept="image/png, image/jpeg">
-        <input type="submit" name="upload" value="Upload"/><br/>
-    </form>
     </br>
     <table class="table">
       <thead>
