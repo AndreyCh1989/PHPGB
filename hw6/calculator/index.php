@@ -14,7 +14,7 @@
     <form class="w-25">
       <div class="form-group mt-5">
         <span class="label"></span>
-        <input type="number" class="form-control" name="input" id="input" value="0">
+        <input type="number" class="form-control" id="input" value="0">
       </div>
       <div class="form-group">
         <div class="row w-100 m-0">
