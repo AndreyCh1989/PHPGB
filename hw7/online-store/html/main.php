@@ -1,3 +1,10 @@
+<?php
+    include ROOT_DIR . 'main.php';
+
+    include HTML_DIR . 'auth.php';
+    include HTML_DIR . 'header.php';
+?>
+
 <body>
 <link rel="stylesheet" type="text/css" href="<?=STATIC_DIR . 'css/main.css'?>">
 <h1>Catalog</h1>
@@ -34,3 +41,7 @@
 
 <script src="<?=STATIC_DIR . 'js/main.js'?>" type="text/javascript"></script>
 </body>
+
+<?php
+    include HTML_DIR . '/footer.php';
+?>

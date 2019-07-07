@@ -1,21 +1,28 @@
 <?php
+    session_start();
+    $_SESSION['isAuth'] = false;
+
     $request = $_POST;
 
     $username = $request['username'];
     $pass = $request['pass'];
 
-    if (!$username || !$pass)
-        echo 'Please set username or password';
+    if ($username && $pass) {
+        $auth_data = query(sprintf(GET_AUTH_INFO, $username));
 
-    $myslqi = connect_SQL();
-    $result = mysqli_query($myslqi, sprintf(GET_AUTH_INFO, $username));
-    if (!$result) {
-        print_r($myslqi);
+
+        if (sizeof($auth_data) > 0) {
+            $auth = $auth_data[0];
+
+            if(password_verify($pass, $auth['password'])) {
+                    $_SESSION['isAuth'] = true;
+                    $_SESSION['username'] = $username;
+                    header('location: ./index.php');
+                    die;
+            }
+        }
+
+        $status = 'Login failed. Please check entered information and try again.';
     }
 
-    $auth = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $auth[] = $row;
-    }
-
-    print_r($auth);
+    session_write_close();

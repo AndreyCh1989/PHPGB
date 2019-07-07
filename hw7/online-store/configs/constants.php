@@ -1,5 +1,6 @@
 <?php
 
+const BR = '</br>';
 define('ROOT_DIR', './');
 define('STATIC_DIR', './static/');
 define('PICS_DIR', STATIC_DIR . 'img/catalog/');

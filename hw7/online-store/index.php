@@ -2,7 +2,11 @@
     include './autoload.php';
     autoload('./configs');
 
-    include HTML_DIR . '/header.php';
-    include HTML_DIR . '/login.php';
-    include HTML_DIR . '/footer.php';
+    session_start();
+    if ($_SESSION['isAuth'] === true) {
+        include HTML_DIR . '/main.php';
+    } else {
+        include HTML_DIR . '/login.php';
+    }
+    session_write_close();
 ?>
