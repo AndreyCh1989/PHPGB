@@ -12,8 +12,28 @@
     <?php foreach (getAll() as $product): ?>
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <img class="img" src="<?=PICS_DIR . $product['image']?>" data-id="<?=$product['id']?>" width="100" height="100" data-toggle="modal" data-target="#exampleModal"/>
-                <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Add</button>
+                <img class="img"
+                    src="<?=PICS_DIR . $product['image']?>"
+                    data-img="<?=$product['image']?>"
+                    data-id="<?=$product['id']?>"
+                    data-price="<?=$product['price']?>"
+                    data-name="<?=$product['name']?>"
+                    width="100"
+                    height="100"
+                    data-toggle="modal"
+                    data-target="#exampleModal"></img>
+                <form method="POST" id="prod<?=$product['id']?>" action="cart.php">
+                    <input type="hidden" name="op" value="add">
+                    <input type="hidden" name="id" value="<?=$product['id']?>">
+                    <input type="hidden" name="img" value="<?=$product['image']?>">
+                    <input type="hidden" name="name" value="<?=$product['name']?>">
+                    <input type="hidden" name="price" value="<?=$product['price']?>">
+                    <button
+                        type="button"
+                        onClick="submitform('prod<?=$product['id']?>')"
+                        class="btn btn-secondary mt-3 add"
+                        data-dismiss="modal">Add</button>
+                </form>
             </div>
         </div>
     <?php endforeach;?>
