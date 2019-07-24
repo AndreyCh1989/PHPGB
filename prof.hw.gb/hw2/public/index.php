@@ -1,19 +1,19 @@
 <?php
+include $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'] . '/../services/Autoload.php';
 
-include $_SERVER['DOCUMENT_ROOT'] .
-    '/../services/Autoload.php';
+use App\models\Car;
+use App\services\BD;
+use App\services\Autoload;
 
 spl_autoload_register(
-    [new Autoload(),
-        'loadClass']
+    [new Autoload(), 'loadClass']
 );
 
-$user = new User(new BD());
-
-$user->getOne(12);
-$good = (new Good(new BD()))->getAll();
-
-var_dump($good);
-var_dump($user->calc([1,15,456,456]));
-
+$car = new Car(new BD());
+$car->getOne(1);
+//
+//echo '<br>';
+//
+//$house = new House(new BD());
+//$house->getOne(1);
 

@@ -1,19 +1,13 @@
 <?php
+namespace App\services;
+
 class Autoload
 {
-    private $dir = [
-       'models', 'services'
-    ];
+    private const CLASS_NAME_REPLACE = 'App\\';
 
     public function loadClass($className)
     {
-        foreach ($this->dir as $dir) {
-            $file = $_SERVER['DOCUMENT_ROOT'] .
-                "/../{$dir}/{$className}.php";
-            if (file_exists($file)) {
-                include $file;
-                break;
-            }
-        }
+        $classPath = str_replace(self::CLASS_NAME_REPLACE, '', $className);
+        include $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'] . "../{$classPath}.php";
     }
 }

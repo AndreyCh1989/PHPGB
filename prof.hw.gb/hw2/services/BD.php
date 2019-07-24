@@ -1,4 +1,8 @@
 <?php
+namespace App\services;
+
+use App\models\CalcRows;
+
 class BD implements IBD, IBD2
 {
     use CalcRows;

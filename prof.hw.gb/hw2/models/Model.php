@@ -1,4 +1,6 @@
 <?php
+namespace App\models;
+
 abstract class Model
 {
     /**
@@ -10,7 +12,7 @@ abstract class Model
      * Model constructor.
      * @param IBD $bd
      */
-    public function __construct( $bd)
+    public function __construct($bd)
     {
         $this->bd = $bd;
     }

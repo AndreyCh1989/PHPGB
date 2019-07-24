@@ -1,4 +1,6 @@
 <?php
+namespace App\models;
+
 trait CalcRows
 {
     public $rt = 10;

@@ -1,4 +1,6 @@
 <?php
+namespace App\services;
+
 interface IBD
 {
     public function find(string $sql);
