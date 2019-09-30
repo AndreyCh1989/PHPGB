@@ -6,11 +6,8 @@
             <div class="card-body">
                 <?php
                     $path = PICS_DIR . $product['image'];
-                    $image = fopen($path, 'rb');
-                    $Data = fread($image, filesize($path));
-                    fclose($image);
                 ?>
-                <img class="img" src="data:image/jpeg;base64,<?=base64_encode($Data)?>" data-id="<?=$product['id']?>" width="100" height="100" data-toggle="modal" data-target="#exampleModal"/>
+                <img class="img" src="<?=$path?>" data-id="<?=$product['id']?>" width="100" height="100"/>
                 <div><?=$product['name']?></div>
                 <div><?=$product['price']?></div>
                 <div><?=$product['description']?></div>

@@ -2,12 +2,19 @@
 
 namespace app\controllers;
 
+use app\interfaces\IRenderer;
+
 abstract class Controller
 {
     private $action;
     private $defaultAction = "index";
     private $layout = 'main';
     private $useLayouts = true;
+    private $renderer;
+
+    public function __construct(IRenderer $renderer) {
+        $this->renderer = $renderer;
+    }
 
     public function runAction($action = null, $params = []) {
         $this->action = $action ?: $this->defaultAction;
@@ -21,20 +28,12 @@ abstract class Controller
 
     public function render($template, $params = []) {
         if ($this->useLayouts) {
-            return $this->renderTemplate("layouts/{$this->layout}", [
-                'content' => $this->renderTemplate($template, $params),
-                'menu' => $this->renderTemplate('menu')
+            return $this->renderer->renderTemplate("layouts/{$this->layout}", [
+                'content' => $this->renderer->renderTemplate($template, $params),
+                'menu' => $this->renderer->renderTemplate('menu')
             ]);
         } else {
-            return $this->renderTemplate($template, $params);
+            return $this->renderer->renderTemplate($template, $params);
         }
-    }
-
-    public function renderTemplate($template, $params = []) {
-        ob_start();
-        extract($params);
-        $templatePath = TEMPLATES_DIR . $template . ".php";
-        include $templatePath;
-        return ob_get_clean();
     }
 }

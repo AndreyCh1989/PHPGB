@@ -8,7 +8,7 @@ use app\engine\Db;
 abstract class Model extends DBModel
 {
     protected $id;
-    protected $properties = [];
+    public $properties = [];
     protected $updatedProps = [];
 
     public function __set($key, $value)
