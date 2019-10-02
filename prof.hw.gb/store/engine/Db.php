@@ -6,6 +6,8 @@ use app\traits\Tsingletone;
 
 class Db
 {
+    private $connection;
+
     private $config = [
         'driver' => 'mysql',
         'host' => 'localhost',

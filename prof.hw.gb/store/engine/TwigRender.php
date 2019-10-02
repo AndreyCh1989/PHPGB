@@ -3,7 +3,7 @@
 namespace app\engine;
 
 use app\interfaces\IRenderer;
-use app\engine\Twig;
+use app\engine\autoloaders\{Twig};
 
 require_once '../vendor/autoload.php';
 

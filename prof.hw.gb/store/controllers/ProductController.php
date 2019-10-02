@@ -14,8 +14,8 @@ class ProductController extends Controller
         $pageItemsCount = 10;
         $page = 1;
 
-        if (array_key_exists('page', $params) && $params[page] > 1) {
-            $page = $params[page];
+        if (array_key_exists('page', $params) && $params['page'] > 1) {
+            $page = $params['page'];
         }
 
         $catalog = Product::getRange(0, $pageItemsCount * $page);

@@ -1,6 +1,6 @@
 <?
 
-namespace app\engine;
+namespace app\engine\autoloaders;
 
 class Autoload {
     public function loadClass($className) {

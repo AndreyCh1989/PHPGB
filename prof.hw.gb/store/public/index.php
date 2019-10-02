@@ -1,10 +1,11 @@
 <?
 
+use app\engine\autoloaders\{Autoload};
 use app\models\{Product, User, Order, Cart};
-use app\engine\{Autoload, Db, Render, TwigRender};
+use app\engine\{Db, Render, TwigRender};
 
 include "../config/config.php";
-include "../engine/Autoload.php";
+include "../engine/autoloaders/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
@@ -14,7 +15,7 @@ $actionName = $_GET['a'];
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName)  . "Controller";
 
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new TwigRender());
+    $controller = new $controllerClass(new Render());
     $controller->runAction($actionName, $_GET);
 } else {
     echo "No such controller";

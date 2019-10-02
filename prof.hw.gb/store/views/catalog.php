@@ -2,7 +2,7 @@
 <div class="container">
     <?php foreach ($catalog as $product): ?>
         <?php $product['cardUrl'] = "?c=product&a=card&id={$product['id']}" ?>
-        <div class="card" style="width: 18rem;" onClick="window.location = '<?=$product['cardUrl']?>'">
+        <a class="card" style="width: 18rem;" href="<?=$product['cardUrl']?>">
             <div class="card-body">
                 <?php
                     $path = PICS_DIR . $product['image'];
@@ -12,7 +12,7 @@
                 <div><?=$product['price']?></div>
                 <div><?=$product['description']?></div>
             </div>
-        </div>
+        </a>
     <?php endforeach;?>
 </div>
 <div class='button-row'>
@@ -20,7 +20,7 @@
         $nextPage = $page + 1;
         $url = "?c=product&a=catalog&page={$nextPage}"
     ?>
-    <input type="button" value="Еще" onClick="window.location = '<?=$url?>'" />
+    <a class="button" value="Еще" href="window.location = '<?=$url?>'" />
 </div>
 
 <style>
