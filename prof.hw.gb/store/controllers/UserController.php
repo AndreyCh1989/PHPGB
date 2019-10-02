@@ -6,17 +6,17 @@ use app\models\User;
 
 class UserController extends Controller
 {
-    public function actionIndex($params) {
-        $this->actionUsers($params);
+    public function actionIndex($requestParams) {
+        $this->actionUsers($requestParams);
     }
 
-    public function actionUsers($params) {
+    public function actionUsers($requestParams) {
         $users = User::getAll();
         echo $this->render('users', ['users' => $users]);
     }
 
-    public function actionUser($params) {
-        $id = $params['id'];
+    public function actionUser($requestParams) {
+        $id = $requestParams['id'];
         $user = User::getOne($id);
         echo $this->render('user', ['user' => $user]);
     }

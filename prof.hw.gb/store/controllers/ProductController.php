@@ -6,24 +6,24 @@ use app\models\Product;
 
 class ProductController extends Controller
 {
-    public function actionIndex($params) {
-        $this->actionCatalog($params);
+    public function actionIndex($requestParams) {
+        $this->actionCatalog($requestParams);
     }
 
-    public function actionCatalog($params) {
+    public function actionCatalog($requestParams) {
         $pageItemsCount = 10;
         $page = 1;
 
-        if (array_key_exists('page', $params) && $params['page'] > 1) {
-            $page = $params['page'];
+        if (array_key_exists('page', $requestParams) && $requestParams['page'] > 1) {
+            $page = $requestParams['page'];
         }
 
         $catalog = Product::getRange(0, $pageItemsCount * $page);
         echo $this->render('catalog', ['catalog' => $catalog, 'page' => $page]);
     }
 
-    public function actionCard($params) {
-        $id = $params['id'];
+    public function actionCard($requestParams) {
+        $id = $requestParams['id'];
         $product = Product::getOne($id);
         echo $this->render('card', ['product' => $product]);
     }

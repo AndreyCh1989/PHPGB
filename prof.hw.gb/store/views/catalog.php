@@ -1,9 +1,9 @@
 <h1>Catalog</h1>
 <div class="container">
     <?php foreach ($catalog as $product): ?>
-        <?php $product['cardUrl'] = "?c=product&a=card&id={$product['id']}" ?>
-        <a class="card" style="width: 18rem;" href="<?=$product['cardUrl']?>">
-            <div class="card-body">
+        <?php $product['cardUrl'] = "/product/card/?id={$product['id']}" ?>
+        <div class="card" style="width: 18rem;">
+            <a class="card-body" href="<?=$product['cardUrl']?>">
                 <?php
                     $path = PICS_DIR . $product['image'];
                 ?>
@@ -11,14 +11,15 @@
                 <div><?=$product['name']?></div>
                 <div><?=$product['price']?></div>
                 <div><?=$product['description']?></div>
-            </div>
-        </a>
+            </a>
+            <button class="buy" data-id="<?=$product['id']?>">Купить</button>
+        </div>
     <?php endforeach;?>
 </div>
 <div class='button-row'>
     <?php
         $nextPage = $page + 1;
-        $url = "?c=product&a=catalog&page={$nextPage}"
+        $url = "/product/catalog/?page={$nextPage}"
     ?>
     <a class="button" value="Еще" href="window.location = '<?=$url?>'" />
 </div>
@@ -37,3 +38,27 @@
     justify-content: center;
 }
 </style>
+
+<script>
+
+document.addEventListener('click', (event) => {
+    let element = event.target;
+    if (element.className === 'buy' && element.tagName === 'BUTTON') {
+        let id = element.dataset.id;
+        (async () => {
+            const response = await fetch('/api/addbasket/', {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify({
+                    id: id
+                }),
+            });
+            const answer = await response.json();
+            document.getElementById('count').innerText = answer.count;
+
+        })();
+    }
+})
+</script>

@@ -1,22 +1,26 @@
 <?
 
+session_start();
+
 use app\engine\autoloaders\{Autoload};
 use app\models\{Product, User, Order, Cart};
-use app\engine\{Db, Render, TwigRender};
+use app\engine\{Db, Render, TwigRender, Request};
 
 include "../config/config.php";
 include "../engine/autoloaders/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$controllerName = $_GET['c'] ?: 'product';
-$actionName = $_GET['a'];
+$request = new Request();
+
+$controllerName = $request->getControllerName() ?: 'product';
+$actionName = $request->getActionName();
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName)  . "Controller";
 
 if (class_exists($controllerClass)) {
     $controller = new $controllerClass(new Render());
-    $controller->runAction($actionName, $_GET);
+    $controller->runAction($actionName, $request->getParams());
 } else {
     echo "No such controller";
 }

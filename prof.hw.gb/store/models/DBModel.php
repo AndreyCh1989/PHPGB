@@ -73,4 +73,10 @@ abstract class DBModel implements IModel
         $sql = "SELECT * FROM {$tableName} limit :from, :to";
         return Db::getInstance()->queryLimit($sql, $from, $to);
     }
+
+    public static function getCountWhere($field, $value): string {
+        $tableName = static::getTableName();
+        $sql = "SELECT count(*) as count FROM {$tableName} WHERE `$field`=:$field";
+        return Db::getInstance()->queryOne(null, $sql, ["$field"=>$value])['count'];
+    }
 }
