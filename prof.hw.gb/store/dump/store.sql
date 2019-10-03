@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Сен 30 2019 г., 03:20
+-- Время создания: Окт 03 2019 г., 13:21
 -- Версия сервера: 5.6.43
 -- Версия PHP: 7.1.22
 
@@ -33,6 +33,13 @@ CREATE TABLE `basket` (
   `session_id` varchar(45) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `basket`
+--
+
+INSERT INTO `basket` (`id`, `session_id`, `product_id`) VALUES
+(9, 'kl4o8mte74g3q04pomrgdrqa3fuo7kl5', 42);
 
 -- --------------------------------------------------------
 
@@ -103,16 +110,16 @@ INSERT INTO `product` (`id`, `name`, `price`, `description`, `image`) VALUES
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `login` varchar(45) NOT NULL,
-  `pass` varchar(45) NOT NULL
+  `pass` varchar(255) NOT NULL,
+  `hash` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `pass`) VALUES
-(1, 'John', 'Tra'),
-(2, 'Patrick', 'Bro');
+INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
+(1, 'admin', '$2y$10$UTfe8ZTqBxfQ7hXdDTWNoep0Qbx6oWEEvwFYuEBmmbDTzyTFkS.qC', '3729714855d95cb5d3371d8.51026590');
 
 --
 -- Индексы сохранённых таблиц
@@ -149,7 +156,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `product`

@@ -1,4 +1,11 @@
 <?
+
+////////////////////////////////////////
+//user = admin pass=111
+////////////////////////////////////////
+
+
+
 use app\engine\autoloaders\{Autoload};
 use app\models\{Product, User, Order, Cart};
 use app\engine\{Session, Db, Render, TwigRender, Request};
