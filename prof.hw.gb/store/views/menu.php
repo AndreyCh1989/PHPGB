@@ -1,6 +1,5 @@
 <nav>
     <a href="/"> Главная </a>
-    <a href="/user/users"> Пользователи </a>
     <a href="/basket/"> Корзина <span id="count"><?=$count?></span></a>
 </nav>
 

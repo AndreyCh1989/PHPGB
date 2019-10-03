@@ -1,16 +1,14 @@
 <?
-
-session_start();
-
 use app\engine\autoloaders\{Autoload};
 use app\models\{Product, User, Order, Cart};
-use app\engine\{Db, Render, TwigRender, Request};
+use app\engine\{Session, Db, Render, TwigRender, Request};
 
 include "../config/config.php";
 include "../engine/autoloaders/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
+Session::getInstance()->start();
 $request = new Request();
 
 $controllerName = $request->getControllerName() ?: 'product';
@@ -65,6 +63,8 @@ if (class_exists($controllerClass)) {
 //var_dump($product->save());
 //$product = new Product('Ботиночки', 111);
 //var_dump($product->save());
+
+
 //var_dump(Product::getOne($product->getId()));
 //
 //$product->description = 'хреновые';

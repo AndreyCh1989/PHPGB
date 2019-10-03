@@ -32,6 +32,6 @@ abstract class Model extends DBModel
     }
 
     public function clearUpdated() {
-        unset($this->updatedProps);
+        empty($this->updatedProps);
     }
 }

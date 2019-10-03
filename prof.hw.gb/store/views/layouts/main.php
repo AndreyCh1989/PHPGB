@@ -5,7 +5,16 @@
     <title>Document</title>
 </head>
 <body>
-<?=$menu?><br>
-<?=$content?>
+<?if ($auth):?>
+    Добро пожаловать <?=$username?> <a href="/user/logout/"> [Выход]</a>
+    <?=$menu?><br>
+    <?=$content?>
+<?else:?>
+    <form action="/user/login/" method="post">
+        <input type="text" name="login" placeholder="Логин">
+        <input type="text" name="pass" placeholder="Пароль">
+        <input type="submit" name="submit" value="Войти">
+    </form>
+<?endif;?><br>
 </body>
 </html>

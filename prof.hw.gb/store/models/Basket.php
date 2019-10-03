@@ -12,6 +12,8 @@ class Basket extends Model
     {
         $this->session_id = $session_id;
         $this->product_id = $product_id;
+
+        $this->clearUpdated();
     }
 
 
