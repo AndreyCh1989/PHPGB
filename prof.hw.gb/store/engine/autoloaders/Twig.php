@@ -1,6 +1,6 @@
 <?php
 
-namespace app\engine;
+namespace app\engine\autoloaders;
 
 use app\traits\Tsingletone;
 

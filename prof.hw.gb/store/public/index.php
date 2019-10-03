@@ -1,21 +1,31 @@
 <?
 
+////////////////////////////////////////
+//user = admin pass=111
+////////////////////////////////////////
+
+
+
+use app\engine\autoloaders\{Autoload};
 use app\models\{Product, User, Order, Cart};
-use app\engine\{Autoload, Db, Render, TwigRender};
+use app\engine\{Session, Db, Render, TwigRender, Request};
 
 include "../config/config.php";
-include "../engine/Autoload.php";
+include "../engine/autoloaders/Autoload.php";
 
 spl_autoload_register([new Autoload(), 'loadClass']);
 
-$controllerName = $_GET['c'] ?: 'product';
-$actionName = $_GET['a'];
+Session::getInstance()->start();
+$request = new Request();
+
+$controllerName = $request->getControllerName() ?: 'product';
+$actionName = $request->getActionName();
 
 $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName)  . "Controller";
 
 if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new TwigRender());
-    $controller->runAction($actionName, $_GET);
+    $controller = new $controllerClass(new Render());
+    $controller->runAction($actionName, $request->getParams());
 } else {
     echo "No such controller";
 }
@@ -60,6 +70,8 @@ if (class_exists($controllerClass)) {
 //var_dump($product->save());
 //$product = new Product('Ботиночки', 111);
 //var_dump($product->save());
+
+
 //var_dump(Product::getOne($product->getId()));
 //
 //$product->description = 'хреновые';

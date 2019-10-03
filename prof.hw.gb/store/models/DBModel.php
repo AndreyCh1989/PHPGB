@@ -26,7 +26,6 @@ abstract class DBModel implements IModel
     public function update(): bool {
         $tableName = static::getTableName();
         $updatedProps = $this->updatedProps;
-
         $values = [];
         foreach ($updatedProps as $key => $value)
             $values[] =  "{$key} = :{$key}";
@@ -72,5 +71,17 @@ abstract class DBModel implements IModel
         $tableName = static::getTableName();
         $sql = "SELECT * FROM {$tableName} limit :from, :to";
         return Db::getInstance()->queryLimit($sql, $from, $to);
+    }
+
+    public static function getCountWhere($field, $value): string {
+        $tableName = static::getTableName();
+        $sql = "SELECT count(*) as count FROM {$tableName} WHERE `$field`=:$field";
+        return Db::getInstance()->queryOne(null, $sql, ["$field"=>$value])['count'];
+    }
+
+    public function getWhere($field, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE `$field`=:$field";
+        return Db::getInstance()->queryOne(get_called_class(), $sql, ["$field"=>$value]);
     }
 }
