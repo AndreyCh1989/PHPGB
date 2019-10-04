@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\interfaces\IRenderer;
 use app\models\{Basket, User};
+use app\engine\{Session};
 
 abstract class Controller
 {
@@ -34,7 +35,7 @@ abstract class Controller
                 'auth' => User::isAuth(),
                 'username' => User::getName(),
                 'menu' => $this->renderer->renderTemplate('menu', [
-                    'count' => Basket::getCountWhere('session_id', session_id())
+                    'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
                 ])
             ]);
         } else {

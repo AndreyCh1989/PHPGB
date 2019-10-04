@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\engine\Session;
 
 class AuthException extends \Exception {}
 
@@ -22,7 +23,7 @@ class UserController extends Controller
     }
 
     public function actionLogout($requestParams) {
-        session_destroy();
+        Session::getInstance()->kill();
         header("Location: /");
         exit();
     }

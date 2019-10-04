@@ -9,7 +9,7 @@ use app\models\{User};
 
 class Basket extends Model
 {
-    public function __construct($session_id = null, $product_id = null)
+    public function __construct($session_id = null, $product_id = null, $user = null)
     {
         $this->session_id = $session_id;
         $this->product_id = $product_id;

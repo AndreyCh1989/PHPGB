@@ -9,10 +9,13 @@ class Session
     use TSingletone;
 
     public function start() {
-        session_start();
+        if(!isset($_SESSION)) {
+            session_start();
+        }
     }
 
     public function kill() {
+        session_regenerate_id();
         session_destroy();
     }
 
