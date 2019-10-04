@@ -14,7 +14,7 @@ class ApiController extends Controller
 
         $response = [
             'result' => 1,
-            'count' => Basket::getCountWhere('session_id', session_id())
+            'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
         ];
         header('Content-Type: application/json');
         echo json_encode($response);
@@ -27,7 +27,7 @@ class ApiController extends Controller
 
         $response = [
             'result' => 1,
-            'count' => Basket::getCountWhere('session_id', session_id())
+            'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
         ];
         header('Content-Type: application/json');
         echo json_encode($response);
