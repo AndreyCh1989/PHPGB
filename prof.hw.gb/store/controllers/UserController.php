@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\engine\Session;
+
+class AuthException extends \Exception {}
 
 class UserController extends Controller
 {
@@ -11,7 +14,7 @@ class UserController extends Controller
             $login = $requestParams['login'];
             $pass = $requestParams['pass'];
             if (!User::auth($login, $pass)) {
-                Die("Не верный пароль!");
+                throw new AuthException('Не верный логин или пароль');
             } else {
                 header("Location: /");
             }
@@ -20,7 +23,7 @@ class UserController extends Controller
     }
 
     public function actionLogout($requestParams) {
-        session_destroy();
+        Session::getInstance()->kill();
         header("Location: /");
         exit();
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 03 2019 г., 13:21
+-- Время создания: Окт 04 2019 г., 15:01
 -- Версия сервера: 5.6.43
 -- Версия PHP: 7.1.22
 
@@ -31,15 +31,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `basket` (
   `id` int(11) NOT NULL,
   `session_id` varchar(45) NOT NULL,
-  `product_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `user` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `basket`
 --
 
-INSERT INTO `basket` (`id`, `session_id`, `product_id`) VALUES
-(9, 'kl4o8mte74g3q04pomrgdrqa3fuo7kl5', 42);
+INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user`) VALUES
+(9, 'kl4o8mte74g3q04pomrgdrqa3fuo7kl5', 42, NULL),
+(12, 'se9614a4t0mlhl01oeuqvar77mq53rlg', 42, 1),
+(13, 'se9614a4t0mlhl01oeuqvar77mq53rlg', 46, 1);
 
 -- --------------------------------------------------------
 
@@ -119,7 +122,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
-(1, 'admin', '$2y$10$UTfe8ZTqBxfQ7hXdDTWNoep0Qbx6oWEEvwFYuEBmmbDTzyTFkS.qC', '3729714855d95cb5d3371d8.51026590');
+(1, 'admin', '$2y$10$UTfe8ZTqBxfQ7hXdDTWNoep0Qbx6oWEEvwFYuEBmmbDTzyTFkS.qC', '20070881485d9731475e9ca8.23170880');
 
 --
 -- Индексы сохранённых таблиц
@@ -168,7 +171,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

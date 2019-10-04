@@ -3,31 +3,37 @@
 ////////////////////////////////////////
 //user = admin pass=111
 ////////////////////////////////////////
+    use app\engine\autoloaders\{Autoload};
+    use app\models\{Product, User, Order, Cart};
+    use app\engine\{Session, Db, Render, TwigRender, Request};
+    use app\controllers\{AuthException};
 
+try {
+    include "../config/config.php";
+    include "../engine/autoloaders/Autoload.php";
 
+    spl_autoload_register([new Autoload(), 'loadClass']);
 
-use app\engine\autoloaders\{Autoload};
-use app\models\{Product, User, Order, Cart};
-use app\engine\{Session, Db, Render, TwigRender, Request};
+    Session::getInstance()->start();
+    $request = new Request();
 
-include "../config/config.php";
-include "../engine/autoloaders/Autoload.php";
+    $controllerName = $request->getControllerName() ?: 'product';
+    $actionName = $request->getActionName();
 
-spl_autoload_register([new Autoload(), 'loadClass']);
+    $controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName)  . "Controller";
 
-Session::getInstance()->start();
-$request = new Request();
-
-$controllerName = $request->getControllerName() ?: 'product';
-$actionName = $request->getActionName();
-
-$controllerClass = CONTROLLER_NAMESPACE . ucfirst($controllerName)  . "Controller";
-
-if (class_exists($controllerClass)) {
-    $controller = new $controllerClass(new Render());
-    $controller->runAction($actionName, $request->getParams());
-} else {
-    echo "No such controller";
+    if (class_exists($controllerClass)) {
+        $controller = new $controllerClass(new Render());
+        $controller->runAction($actionName, $request->getParams());
+    } else {
+        echo "No such controller";
+    }
+}
+catch (AuthException $e) {
+    echo $e->getMessage();
+}
+catch (\Exception $e) {
+    var_dump($e);
 }
 
 //$product = new Product('Ботиночки', 123.23, 'Белые с черной полоской');

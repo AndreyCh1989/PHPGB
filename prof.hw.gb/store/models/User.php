@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\engine\{Session};
+use app\models\{Basket};
 
 class User extends Model
 {
@@ -29,6 +30,8 @@ class User extends Model
             $user->hash = $hash;
             $user->save();
             Session::getInstance()->hash = $hash;
+
+            Basket::moveToUserBasket($user);
 
             return true;
         }

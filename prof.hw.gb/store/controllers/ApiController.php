@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 
-use app\engine\Request;
+use app\engine\{Request, Session};
 use app\models\Basket;
 
 class ApiController extends Controller
 {
     public function actionAddBasket($requestParams) {
-        $basket = new Basket(session_id(), $requestParams['id']);
+        $basket = new Basket(session_id(), $requestParams['id'], Session::getInstance()->id);
         $basket->save();
 
         $response = [
             'result' => 1,
-            'count' => Basket::getCountWhere('session_id', session_id())
+            'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
         ];
         header('Content-Type: application/json');
         echo json_encode($response);
@@ -27,7 +27,7 @@ class ApiController extends Controller
 
         $response = [
             'result' => 1,
-            'count' => Basket::getCountWhere('session_id', session_id())
+            'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
         ];
         header('Content-Type: application/json');
         echo json_encode($response);

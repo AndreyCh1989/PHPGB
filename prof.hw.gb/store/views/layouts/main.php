@@ -7,8 +7,6 @@
 <body>
 <?if ($auth):?>
     Добро пожаловать <?=$username?> <a href="/user/logout/"> [Выход]</a>
-    <?=$menu?><br>
-    <?=$content?>
 <?else:?>
     <form action="/user/login/" method="post">
         <input type="text" name="login" placeholder="Логин">
@@ -16,5 +14,7 @@
         <input type="submit" name="submit" value="Войти">
     </form>
 <?endif;?><br>
+<?=$menu?><br>
+<?=$content?>
 </body>
 </html>

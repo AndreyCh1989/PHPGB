@@ -84,4 +84,10 @@ abstract class DBModel implements IModel
         $sql = "SELECT * FROM {$tableName} WHERE `$field`=:$field";
         return Db::getInstance()->queryOne(get_called_class(), $sql, ["$field"=>$value]);
     }
+
+    public function getAllWhere($field, $value) {
+        $tableName = static::getTableName();
+        $sql = "SELECT * FROM {$tableName} WHERE `$field`=:$field";
+        return Db::getInstance()->queryAll($sql, ["$field"=>$value]);
+    }
 }
