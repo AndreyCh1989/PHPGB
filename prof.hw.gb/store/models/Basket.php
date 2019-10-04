@@ -4,7 +4,8 @@
 namespace app\models;
 
 
-use app\engine\Db;
+use app\engine\{Db, Session};
+use app\models\{User};
 
 class Basket extends Model
 {
@@ -23,10 +24,22 @@ class Basket extends Model
     }
 
 
-    public static function getBasket($session)
+    public static function getBasket($session, $user_id)
     {
-        $sql = "SELECT p.id id_prod, b.id id_basket, p.name, p.description, p.price FROM basket b,product p WHERE b.product_id=p.id AND session_id = :session";
+        $sql = "SELECT p.id id_prod, b.id id_basket, p.name, p.description, p.price, b.user FROM basket b,product p WHERE b.product_id=p.id AND (b.session_id = :session or b.user = :user_id)";
 
-        return Db::getInstance()->queryAll($sql, ['session' => $session]);
+        return Db::getInstance()->queryAll($sql, ['session' => $session, 'user_id' => $user_id]);
+    }
+
+    public static function moveToUserBasket(User $user)
+    {
+        $items = Basket::getAllWhere("session_id", session_id());
+        foreach ($items as $item) {
+            if (!$item->user) {
+                $basket = Basket::getOne($item['id']);
+                $basket->user = $user->id;
+                $basket->save();
+            }
+        }
     }
 }

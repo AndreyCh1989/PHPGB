@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\models\User;
 
+class AuthException extends \Exception {}
+
 class UserController extends Controller
 {
     public function actionLogin($requestParams) {
@@ -11,7 +13,7 @@ class UserController extends Controller
             $login = $requestParams['login'];
             $pass = $requestParams['pass'];
             if (!User::auth($login, $pass)) {
-                Die("Не верный пароль!");
+                throw new AuthException('Не верный логин или пароль');
             } else {
                 header("Location: /");
             }
