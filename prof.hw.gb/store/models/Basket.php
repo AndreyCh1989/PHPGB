@@ -27,9 +27,23 @@ class Basket extends Model
 
     public static function getBasket($session, $user_id)
     {
-        $sql = "SELECT p.id id_prod, b.id id_basket, p.name, p.description, p.price, b.user FROM basket b,product p WHERE b.product_id=p.id AND (b.session_id = :session or b.user = :user_id)";
+        $sql = "SELECT p.id id_prod, b.id id_basket, p.name, p.description, p.price, b.user FROM basket b,product p WHERE b.product_id=p.id AND (b.session_id = :session or b.user = :user_id) and order_id is null";
 
         return Db::getInstance()->queryAll($sql, ['session' => $session, 'user_id' => $user_id]);
+    }
+
+    public static function getTotal($session, $user_id)
+    {
+        $sql = "SELECT sum(p.price) as total FROM basket b,product p WHERE b.product_id=p.id AND (b.session_id = :session or b.user = :user_id) and order_id is null";
+
+        return Db::getInstance()->queryAll($sql, ['session' => $session, 'user_id' => $user_id])[0]['total'];
+    }
+
+    public static function setOrder($session, $user_id, $order_id)
+    {
+        $sql = "update basket set order_id=:order_id where order_id is null and (session_id = :session or user = :user_id)";
+
+        return Db::getInstance()->execute($sql, ['session' => $session, 'user_id' => $user_id, 'order_id' => $order_id]);
     }
 
     public static function moveToUserBasket(User $user)
