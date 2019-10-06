@@ -47,6 +47,11 @@ class User extends Model
         return false;
     }
 
+    public static function isAdmin() {
+        $user = User::getOne(Session::getInstance()->id);
+        return $user->is_admin;
+    }
+
     public static function getName() {
         return static::isAuth() ? Session::getInstance()->login : "Guest";
     }

@@ -12,7 +12,8 @@ class BasketController extends Controller
     public function actionIndex($requestParams)
     {
         echo $this->render('basket', [
-            'products' => Basket::getBasket(session_id(), Session::getInstance()->id)
+                'products' => Basket::getBasket(session_id(), Session::getInstance()->id),
+                'total' => Basket::getTotal(session_id(), Session::getInstance()->id)
             ]);
     }
 }

@@ -29,13 +29,17 @@ abstract class Controller
     }
 
     public function render($template, $params = []) {
+        $auth = User::isAuth();
+        $params['auth'] = $auth;
+
         if ($this->useLayouts) {
             return $this->renderer->renderTemplate("layouts/{$this->layout}", [
                 'content' => $this->renderer->renderTemplate($template, $params),
-                'auth' => User::isAuth(),
+                'auth' => $auth,
                 'username' => User::getName(),
                 'menu' => $this->renderer->renderTemplate('menu', [
-                    'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id))
+                    'count' => count(Basket::getBasket(session_id(), Session::getInstance()->id)),
+                    'auth' => $auth
                 ])
             ]);
         } else {

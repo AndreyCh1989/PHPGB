@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 04 2019 г., 15:01
+-- Время создания: Окт 07 2019 г., 02:31
 -- Версия сервера: 5.6.43
 -- Версия PHP: 7.1.22
 
@@ -32,17 +32,46 @@ CREATE TABLE `basket` (
   `id` int(11) NOT NULL,
   `session_id` varchar(45) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `user` int(11) DEFAULT NULL
+  `user` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `basket`
 --
 
-INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user`) VALUES
-(9, 'kl4o8mte74g3q04pomrgdrqa3fuo7kl5', 42, NULL),
-(12, 'se9614a4t0mlhl01oeuqvar77mq53rlg', 42, 1),
-(13, 'se9614a4t0mlhl01oeuqvar77mq53rlg', 46, 1);
+INSERT INTO `basket` (`id`, `session_id`, `product_id`, `user`, `order_id`) VALUES
+(48, 'onlmjppsqdhfe4m94aedmd2urv4juti2', 41, 1, 11),
+(49, 'vbv9h8vr5es3cu4ki3qml2thl5qf6gck', 42, 1, 11),
+(50, 'vbv9h8vr5es3cu4ki3qml2thl5qf6gck', 42, 1, 11),
+(51, 'vbv9h8vr5es3cu4ki3qml2thl5qf6gck', 46, 1, 11),
+(52, 'vbv9h8vr5es3cu4ki3qml2thl5qf6gck', 42, 1, 13),
+(54, 'vbv9h8vr5es3cu4ki3qml2thl5qf6gck', 42, 1, 14),
+(55, 'vfu80odmfnijmfjco9lchrcqqaghnfni', 41, 2, 15);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `user` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `total` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `email`, `status`, `user`, `name`, `total`) VALUES
+(11, 'andreychernykh@me.com', 1, 1, 'Comp', 686.23),
+(14, 'ew@wer.ru', 0, 1, 'Max', 10),
+(15, 'chek201@mail.ru', 2, 2, 'Qqq', 123.23);
 
 -- --------------------------------------------------------
 
@@ -114,15 +143,17 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `login` varchar(45) NOT NULL,
   `pass` varchar(255) NOT NULL,
-  `hash` varchar(255) NOT NULL
+  `hash` varchar(255) NOT NULL,
+  `is_admin` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
-(1, 'admin', '$2y$10$UTfe8ZTqBxfQ7hXdDTWNoep0Qbx6oWEEvwFYuEBmmbDTzyTFkS.qC', '20070881485d9731475e9ca8.23170880');
+INSERT INTO `users` (`id`, `login`, `pass`, `hash`, `is_admin`) VALUES
+(1, 'admin', '$2y$10$1JhpxaubN7MTNl14NhKUvejpEMVoBt6t2iMl5CVCoa1IO6VutsgQK', '2440326265d9a7891b249c2.16376740', 1),
+(2, 'user', '$2y$10$1JhpxaubN7MTNl14NhKUvejpEMVoBt6t2iMl5CVCoa1IO6VutsgQK', '7085276925d9a793f27fec7.02840287', NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -135,6 +166,12 @@ ALTER TABLE `basket`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`),
   ADD KEY `product_idx` (`product_id`);
+
+--
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `product`
@@ -159,7 +196,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `product`
@@ -171,7 +214,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

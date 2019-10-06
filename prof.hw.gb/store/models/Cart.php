@@ -7,7 +7,7 @@ class Cart extends Model
     public $id;
     public $orders = [];
 
-    public function getTableName(): string
+    public static function getTableName(): string
     {
         return 'cart';
     }
