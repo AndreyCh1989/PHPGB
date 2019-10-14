@@ -3,13 +3,13 @@
 
     class Explorer {
         public static function getDirectoryIterator(string $path) {
-            return new \DirectoryIterator($path);
+            return new \DirectoryIterator(realpath($path));
         }
 
         public static function getFolders(string $path) {
             $di = static::getDirectoryIterator($path);
             foreach ($di as $file) {
-                if(!$file->isDir()) continue;
+                if(!$file->isDir() || $file->getFileName() == '.') continue;
                 yield $file;
             }
         }
