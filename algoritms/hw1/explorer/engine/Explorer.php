@@ -3,7 +3,7 @@
 
     class Explorer {
         public static function getDirectoryIterator(string $path) {
-            return new \DirectoryIterator(realpath($path));
+            return new \DirectoryIterator($path);
         }
 
         public static function getFolders(string $path) {

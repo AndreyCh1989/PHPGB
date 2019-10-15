@@ -9,12 +9,13 @@
     if (!$_GET['path']) {
         $path = 'C:\\';
     } else {
-        $path = $_GET['path'];
+        $path = realpath($_GET['path']);
     }
 
 ?>
 
 <b>Explorer</b>
+<p style="margin-bottom: 20px">Current path: <?=$path?></p>
 <?php foreach (Explorer::getFolders($path) as $f): ?>
     <p>
         <form method="get" action="/.">
