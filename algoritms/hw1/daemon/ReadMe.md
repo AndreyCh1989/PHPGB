@@ -1,3 +1,2 @@
-1. php -q c:\path\server.php
-
-4. open index.php in browser
+1. php -q c:\[path]\server.php
+2. open index.php in browser
