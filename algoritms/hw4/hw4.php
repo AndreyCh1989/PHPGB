@@ -11,13 +11,16 @@ function calc(string $sentence) {
         //var_dump($char);
 
         if (preg_match('/[0-9]/', $char)) {
+            // if current char is number concatenate it to $number
             $number .= $char;
         } else {
             if ($number != '') {
+                // if current char is not number, but $number is not empty, push $number in $numbers
                 array_push($numbers, $number);
                 $number = '';
 
                 if (preg_match('/[\*\/\^]/', end($actions))) {
+                    // if last action * or \ or ^ do action with last two numbers
                     $n2 = array_pop($numbers);
                     $n1 = array_pop($numbers);
                     array_push($numbers, doAction($n1, $n2, array_pop($actions)));
@@ -25,8 +28,10 @@ function calc(string $sentence) {
             }
 
             if (preg_match('/[\-\+\*\/\^\(]/', $char)) {
+                // if current char is action or parentheses, push $char in $actions
                 array_push($actions, $char);
             } elseif (preg_match('/[\)]/', $char)) {
+                // if current char is ), calculate all actions till (
                 calculate($numbers, $actions, true);
             }
         }
@@ -35,16 +40,19 @@ function calc(string $sentence) {
     }
 
     if ($number != '') {
+        // if $iter has no items more but $number is not empty, push $number in $numbers
         array_push($numbers, $number);
         $number = '';
 
         if (preg_match('/[\*\/\^]/', end($actions))) {
+            // if last action * or \ or ^ do action with last two numbers
             $n2 = array_pop($numbers);
             $n1 = array_pop($numbers);
             array_push($numbers, doAction($n1, $n2, array_pop($actions)));
         }
     }
 
+    // calculating all actions from $actions
     calculate($numbers, $actions);
 
     return $numbers[0];
